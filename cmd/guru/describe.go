@@ -28,7 +28,7 @@ import (
 // - its type, fields, and methods (for an expression or type expression)
 //
 func describe(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 	allowErrors(&lconf)
 
 	if _, err := importQueryPackage(q.Pos, &lconf); err != nil {

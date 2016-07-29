@@ -28,7 +28,7 @@ import (
 //
 func callstack(q *Query) error {
 	fset := token.NewFileSet()
-	lconf := loader.Config{Fset: fset, Build: q.Build}
+	lconf := loader.Config{Fset: fset, Build: q.Build, AllowErrors: q.AllowErrors}
 
 	if err := setPTAScope(&lconf, q.Scope); err != nil {
 		return err

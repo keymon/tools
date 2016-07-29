@@ -27,7 +27,7 @@ import (
 // All printed sets are sorted to ensure determinism.
 //
 func pointsto(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 
 	if err := setPTAScope(&lconf, q.Scope); err != nil {
 		return err

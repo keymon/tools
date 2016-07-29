@@ -30,7 +30,7 @@ import (
 // bands.
 //
 func freevars(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 	allowErrors(&lconf)
 
 	if _, err := importQueryPackage(q.Pos, &lconf); err != nil {

@@ -24,7 +24,7 @@ import (
 // TODO(adonovan): permit the user to query based on a MakeChan (not send/recv),
 // or the implicit receive in "for v := range ch".
 func peers(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 
 	if err := setPTAScope(&lconf, q.Scope); err != nil {
 		return err

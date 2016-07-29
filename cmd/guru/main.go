@@ -28,12 +28,13 @@ import (
 
 // flags
 var (
-	modifiedFlag   = flag.Bool("modified", false, "read archive of modified files from standard input")
-	scopeFlag      = flag.String("scope", "", "comma-separated list of `packages` the analysis should be limited to")
-	ptalogFlag     = flag.String("ptalog", "", "write points-to analysis log to `file`")
-	jsonFlag       = flag.Bool("json", false, "emit output in JSON format")
-	reflectFlag    = flag.Bool("reflect", false, "analyze reflection soundly (slow)")
-	cpuprofileFlag = flag.String("cpuprofile", "", "write CPU profile to `file`")
+	modifiedFlag    = flag.Bool("modified", false, "read archive of modified files from standard input")
+	scopeFlag       = flag.String("scope", "", "comma-separated list of `packages` the analysis should be limited to")
+	ptalogFlag      = flag.String("ptalog", "", "write points-to analysis log to `file`")
+	jsonFlag        = flag.Bool("json", false, "emit output in JSON format")
+	reflectFlag     = flag.Bool("reflect", false, "analyze reflection soundly (slow)")
+	allowErrorsFlag = flag.Bool("allowerrors", false, "analyse program even if some packages contain errors")
+	cpuprofileFlag  = flag.String("cpuprofile", "", "write CPU profile to `file`")
 )
 
 func init() {
@@ -201,12 +202,13 @@ func main() {
 
 	// Ask the guru.
 	query := Query{
-		Pos:        posn,
-		Build:      ctxt,
-		Scope:      scope,
-		PTALog:     ptalog,
-		Reflection: *reflectFlag,
-		Output:     output,
+		Pos:         posn,
+		Build:       ctxt,
+		AllowErrors: *allowErrorsFlag,
+		Scope:       scope,
+		PTALog:      ptalog,
+		Reflection:  *reflectFlag,
+		Output:      output,
 	}
 
 	if err := Run(mode, &query); err != nil {

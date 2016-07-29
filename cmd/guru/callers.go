@@ -20,7 +20,7 @@ import (
 // immediately enclosing the specified source location.
 //
 func callers(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 
 	if err := setPTAScope(&lconf, q.Scope); err != nil {
 		return err

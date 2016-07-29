@@ -71,8 +71,9 @@ func (qpos *queryPos) selectionString(sel *types.Selection) string {
 
 // A Query specifies a single guru query.
 type Query struct {
-	Pos   string         // query position
-	Build *build.Context // package loading configuration
+	Pos         string         // query position
+	Build       *build.Context // package loading configuration
+	AllowErrors bool           // load a Program even if some packages containe errors
 
 	// pointer analysis options
 	Scope      []string  // main packages in (*loader.Config).FromArgs syntax
@@ -138,6 +139,9 @@ func setupPTA(prog *ssa.Program, lprog *loader.Program, ptaLog io.Writer, reflec
 	var testPkgs, mains []*ssa.Package
 	for _, info := range lprog.InitialPackages() {
 		initialPkg := prog.Package(info.Pkg)
+		if initialPkg == nil {
+			continue
+		}
 
 		// Add package to the pointer analysis scope.
 		if initialPkg.Func("main") != nil {

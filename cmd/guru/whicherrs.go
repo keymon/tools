@@ -30,7 +30,7 @@ var builtinErrorType = types.Universe.Lookup("error").Type()
 // TODO(dmorsing): figure out if fields in errors like *os.PathError.Err
 // can be queried recursively somehow.
 func whicherrs(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 
 	if err := setPTAScope(&lconf, q.Scope); err != nil {
 		return err

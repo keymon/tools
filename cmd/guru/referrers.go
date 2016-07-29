@@ -27,7 +27,7 @@ import (
 // as the queried identifier, within any package in the workspace.
 func referrers(q *Query) error {
 	fset := token.NewFileSet()
-	lconf := loader.Config{Fset: fset, Build: q.Build}
+	lconf := loader.Config{Fset: fset, Build: q.Build, AllowErrors: q.AllowErrors}
 	allowErrors(&lconf)
 
 	if _, err := importQueryPackage(q.Pos, &lconf); err != nil {
@@ -123,8 +123,9 @@ func packageReferrers(q *Query, path string) error {
 	// Load the larger program.
 	fset := token.NewFileSet()
 	lconf := loader.Config{
-		Fset:  fset,
-		Build: q.Build,
+		Fset:        fset,
+		Build:       q.Build,
+		AllowErrors: q.AllowErrors,
 		TypeCheckFuncBodies: func(p string) bool {
 			return users[strings.TrimSuffix(p, "_test")]
 		},
@@ -234,8 +235,9 @@ func globalReferrers(q *Query, qpkg, defpkg string, objposn token.Position, isPk
 	// Prepare to load the larger program.
 	fset := token.NewFileSet()
 	lconf := loader.Config{
-		Fset:  fset,
-		Build: q.Build,
+		Fset:        fset,
+		Build:       q.Build,
+		AllowErrors: q.AllowErrors,
 		TypeCheckFuncBodies: func(p string) bool {
 			return users[strings.TrimSuffix(p, "_test")]
 		},

@@ -26,7 +26,7 @@ import (
 // by an implements query on the receiver type.
 //
 func implements(q *Query) error {
-	lconf := loader.Config{Build: q.Build}
+	lconf := loader.Config{Build: q.Build, AllowErrors: q.AllowErrors}
 	allowErrors(&lconf)
 
 	qpkg, err := importQueryPackage(q.Pos, &lconf)
